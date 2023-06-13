@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     users: [
@@ -21,6 +21,16 @@ const initialState = {
     isLoading: false,
     error: undefined
 }
+
+export const fetchUsers = createAsyncThunk('users/fetchUsers', async() => {
+    try {
+        const fetch = fetch('https://randomuser.me/api/?results=5');
+        const response = await fetch.json();
+        return response;
+    } catch (error) {
+        return error;
+    }
+})
 
  export const usersSlice = createSlice({
     name: 'users',
