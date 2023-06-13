@@ -1,7 +1,11 @@
-import { useSelector } from "react-redux"
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux"
 
 export const Users = () => {
-    const {users, isLoading, error } = useSelector(state => state.users)
+    const {users, isLoading, error } = useSelector(state => state.users);
+    const dispatch = useDispatch();
+
+    useEffect(_ => {},[])
   return (
     <div>
         <p>It is loading {isLoading}</p>
