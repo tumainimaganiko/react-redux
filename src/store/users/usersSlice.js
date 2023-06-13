@@ -1,32 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-    users: [
-        {
-            id:1,
-            firstName: 'Tumaini',
-            lastName: 'Maganiko'
-        },
-        {
-            id:2,
-            firstName: 'Ebenezer',
-            lastName: 'Barnabas'
-        },
-        {
-            id:3,
-            firstName: 'Oyedepo',
-            lastName: 'Maganiko'
-        },
-    ],
+    users: [],
     isLoading: false,
     error: undefined
 }
 
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async() => {
     try {
-        const fetch = fetch('https://randomuser.me/api/?results=5');
-        const response = await fetch.json();
-        return response;
+        return fetch('https://randomuser.me/api/?results=5')
+        .then(resp => resp.json());
     } catch (error) {
         return error;
     }
@@ -45,7 +28,8 @@ export const fetchUsers = createAsyncThunk('users/fetchUsers', async() => {
 
         builder.addCase(fetchUsers.fulfilled, (state, action) => {
             state.isLoading = false;
-            state.users = action.payload;
+            state.users = action.payload.results;
+            console.log(action.payload.results)
         })
 
         builder.addCase(fetchUsers.rejected, (state, action) => {
